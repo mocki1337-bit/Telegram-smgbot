@@ -1,0 +1,1209 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1" />
+  <meta name="theme-color" content="#0a0503" />
+  <title>Сморгонь в годы первой мировой войны — WebApp</title>
+
+  <!-- SF Pro (system + CDN) -->
+  <link href="https://fonts.cdnfonts.com/css/sf-pro-display" rel="stylesheet" />
+  <style>
+    /* Ensure SF Pro used where available; fallback to system fonts */
+    :root {
+      --font-main: "SF Pro Display", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    }
+
+    html,
+    body {
+      font-family: var(--font-main);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+  </style>
+
+  <!-- AOS -->
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+
+  <style>
+    /* ============================
+       THEME & DESIGN VARIABLES
+       Senior-quality, preserved original look + enhancements
+       ============================ */
+    :root {
+      --radius-xl: 24px;
+      --radius-lg: 14px;
+      --pad-xl: 28px;
+      --pad-lg: 18px;
+      --transition: all 0.28s cubic-bezier(0.25, 0.8, 0.25, 1);
+
+      --bg-img: url('https://images.unsplash.com/photo-1605812830455-3f8d943c77b9?auto=format&fit=crop&q=60&w=1600&h=900&crop=entropy');
+      --text: #f0e6d2;
+      --muted: rgba(240, 230, 210, 0.78);
+      --gold: #d4a574;
+      --accent: #8B4513;
+
+      --glass: rgba(255, 255, 255, 0.12);
+      --glass-border: rgba(255, 255, 255, 0.22);
+      --glass-blur: blur(18px);
+      --glass-shadow: 0 18px 48px rgba(0, 0, 0, 0.55);
+
+      --panel-bg: rgba(0, 0, 0, 0.24);
+      --max-width: 1120px;
+      --max-panel-width: min(78vw, 420px);
+    }
+
+    html[data-theme="light"] {
+      --text: #1b1e23;
+      --muted: rgba(27, 30, 35, 0.72);
+      --gold: #af7f4f;
+      --glass: rgba(255, 255, 255, 0.55);
+      --panel-bg: rgba(255, 255, 255, 0.78);
+    }
+
+    * {
+      box-sizing: border-box
+    }
+
+    html,
+    body {
+      height: 100%
+    }
+
+    body {
+      margin: 0;
+      font-family: var(--font-main);
+      background: linear-gradient(135deg, rgba(10, 5, 3, 0.96), rgba(28, 15, 8, 0.88)), var(--bg-img) center/cover no-repeat fixed;
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .container {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 26px 22px;
+    }
+
+    /* Top status (removed site title per request) */
+    .topbar {
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .status-chip {
+      padding: 8px 12px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      color: var(--muted);
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
+
+    /* Header: main title changed to requested string */
+    .header {
+      text-align: left;
+      padding: 18px 0 10px;
+    }
+
+    .main-title {
+      font-size: clamp(1.6rem, 4.2vw, 2.6rem);
+      font-weight: 900;
+      color: var(--gold);
+      line-height: 1.03;
+      margin-bottom: 6px;
+    }
+
+    .subtitle {
+      font-style: italic;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    /* Modes row */
+    .modes {
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+      margin: 18px 0;
+    }
+
+    .mode-card {
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-xl);
+      padding: 20px;
+      width: min(340px, 100%);
+      cursor: pointer;
+      transition: var(--transition);
+      box-shadow: var(--glass-shadow);
+      text-align: center
+    }
+
+    .mode-card:hover {
+      transform: translateY(-8px) scale(1.03);
+      box-shadow: 0 28px 68px rgba(0, 0, 0, 0.6)
+    }
+
+    .mode-icon {
+      font-size: 2.4rem;
+      margin-bottom: 10px
+    }
+
+    .mode-card h3 {
+      color: var(--gold);
+      margin: 4px 0;
+      font-size: 1.05rem;
+      font-weight: 800
+    }
+
+    .mode-card p {
+      color: var(--muted);
+      font-size: 0.96rem
+    }
+
+    /* Glass panels, grids, cards — preserved from original */
+    .glass {
+      background: var(--glass);
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--glass-border);
+      padding: var(--pad-xl);
+      box-shadow: var(--glass-shadow);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      transition: var(--transition)
+    }
+
+    .glass:hover {
+      transform: translateY(-3px)
+    }
+
+    .section-title {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--gold);
+      margin-bottom: 12px;
+      text-align: left
+    }
+
+    .fact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 18px;
+      margin-top: 8px;
+    }
+
+    .fact-card {
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01));
+      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.5);
+      cursor: pointer;
+      transition: transform .32s cubic-bezier(.2, .9, .3, 1)
+    }
+
+    .fact-card:hover {
+      transform: translateY(-12px)
+    }
+
+    .fact-img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      display: block;
+      filter: sepia(.14) brightness(.95);
+      transition: filter .28s, transform .28s
+    }
+
+    .fact-card:hover .fact-img {
+      transform: scale(1.02);
+      filter: sepia(.06) brightness(1.04)
+    }
+
+    .fact-content {
+      padding: 14px;
+      position: relative
+    }
+
+    .fact-year {
+      position: absolute;
+      right: 10px;
+      top: 10px;
+      background: var(--accent);
+      color: #fff;
+      padding: 6px 10px;
+      border-radius: 14px;
+      font-weight: 800
+    }
+
+    .fact-title {
+      font-weight: 800;
+      color: var(--gold);
+      margin-bottom: 6px
+    }
+
+    .fact-text {
+      color: var(--muted);
+      line-height: 1.5;
+      font-size: 0.95rem
+    }
+
+    /* Game UI preserved */
+    .character-grid {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-bottom: 12px
+    }
+
+    .char-btn {
+      padding: 10px 14px;
+      border-radius: 12px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01));
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      font-weight: 800;
+      color: var(--text);
+      cursor: pointer
+    }
+
+    .char-btn:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 18px 36px rgba(0, 0, 0, 0.5)
+    }
+
+    .chat-area {
+      max-height: 460px;
+      overflow: auto;
+      padding: 14px;
+      border-radius: 12px;
+      background: rgba(0, 0, 0, 0.12)
+    }
+
+    .message-bubble {
+      padding: 12px 14px;
+      border-radius: 14px;
+      margin: 10px 0;
+      font-weight: 700;
+      animation: msgPop .36s cubic-bezier(.2, .9, .3, 1)
+    }
+
+    @keyframes msgPop {
+      from {
+        transform: translateY(6px) scale(.98);
+        opacity: 0
+      }
+
+      to {
+        transform: none;
+        opacity: 1
+      }
+    }
+
+    .ai-msg {
+      background: linear-gradient(180deg, rgba(20, 16, 12, 0.72), rgba(36, 24, 16, 0.6));
+      color: var(--text);
+      margin-right: auto
+    }
+
+    .user-msg {
+      background: linear-gradient(180deg, rgba(70, 44, 28, 0.9), rgba(54, 34, 22, 0.9));
+      color: var(--text);
+      margin-left: auto
+    }
+
+    .choice-container {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 10px
+    }
+
+    .choice-btn {
+      background: linear-gradient(90deg, #8B4513, #d4a574);
+      color: #fff;
+      border: none;
+      padding: 10px 12px;
+      border-radius: 10px;
+      font-weight: 800;
+      cursor: pointer
+    }
+
+    .progress-container {
+      height: 12px;
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 8px;
+      overflow: hidden;
+      margin-top: 8px
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #8B4513, #d4a574);
+      transition: width .9s ease
+    }
+
+    /* Menu button */
+    .menu-button {
+      position: fixed;
+      top: 10px;
+      right: 12px;
+      z-index: 11000;
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      display: grid;
+      place-items: center;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.45);
+      cursor: pointer
+    }
+
+    .menu-icon {
+      width: 18px;
+      height: 18px;
+      position: relative
+    }
+
+    .menu-icon::before,
+    .menu-icon::after,
+    .menu-icon span {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: 3px;
+      border-radius: 3px;
+      background: var(--text);
+      opacity: .95
+    }
+
+    .menu-icon::before {
+      top: 0
+    }
+
+    .menu-icon span {
+      top: 7.5px
+    }
+
+    .menu-icon::after {
+      bottom: 0
+    }
+
+    /* Side panel */
+    .side-panel {
+      position: fixed;
+      top: 0;
+      right: 0;
+      height: 100dvh;
+      width: var(--max-panel-width);
+      background: var(--panel-bg);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-left: 1px solid rgba(255, 255, 255, 0.06);
+      transform: translateX(110%);
+      transition: transform .36s cubic-bezier(.22, 1, .36, 1);
+      z-index: 10900;
+      display: grid;
+      grid-template-rows: auto 1fr auto
+    }
+
+    .side-panel.open {
+      transform: translateX(0)
+    }
+
+    .side-header {
+      padding: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04)
+    }
+
+    .side-title {
+      font-weight: 800;
+      color: var(--gold)
+    }
+
+    .side-content {
+      padding: 14px;
+      overflow: auto
+    }
+
+    .avatar-block {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 12px
+    }
+
+    .avatar {
+      width: 64px;
+      height: 64px;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      background: rgba(255, 255, 255, 0.04);
+      display: grid;
+      place-items: center
+    }
+
+    .avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover
+    }
+
+    .label {
+      color: var(--muted);
+      font-size: .92rem
+    }
+
+    .btn {
+      padding: 10px 12px;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      font-weight: 800;
+      color: #fff;
+      background: linear-gradient(180deg, #af7f4f, #8B4513);
+      box-shadow: 0 10px 26px rgba(0, 0, 0, 0.4)
+    }
+
+    .btn.secondary {
+      background: linear-gradient(180deg, #f7f5ee, #e0cfa8);
+      color: #2b2319;
+      box-shadow: none;
+      border: 1px solid rgba(0, 0, 0, 0.06)
+    }
+
+    .toggle {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      margin-bottom: 8px;
+      background: rgba(255, 255, 255, 0.02)
+    }
+
+    .switch {
+      position: relative;
+      width: 52px;
+      height: 32px
+    }
+
+    .switch input {
+      display: none
+    }
+
+    .slider {
+      position: absolute;
+      inset: 0;
+      background: rgba(255, 255, 255, 0.06);
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.06)
+    }
+
+    .slider::before {
+      content: '';
+      position: absolute;
+      width: 26px;
+      height: 26px;
+      left: 3px;
+      top: 3px;
+      border-radius: 13px;
+      background: #fff;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3)
+    }
+
+    /* GROQ panel & modal */
+    .groq-panel {
+      margin-top: 12px;
+      display: block;
+    }
+
+    .groq-input {
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 10px;
+      background: rgba(0, 0, 0, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      color: var(--text);
+      font-family: monospace;
+      font-size: 0.95rem
+    }
+
+    .groq-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 8px
+    }
+
+    .groq-result {
+      margin-top: 12px;
+      padding: 12px;
+      border-radius: 10px;
+      background: rgba(0, 0, 0, 0.12);
+      color: var(--muted);
+      font-family: monospace;
+      white-space: pre-wrap;
+      max-height: 300px;
+      overflow: auto
+    }
+
+    /* Modal (GROQ result) */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.72);
+      display: grid;
+      place-items: center;
+      z-index: 12000;
+    }
+
+    .modal {
+      width: min(920px, 94%);
+      max-height: 86vh;
+      overflow: auto;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01));
+      border-radius: 12px;
+      padding: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.7)
+    }
+
+    .modal pre {
+      font-family: monospace;
+      white-space: pre-wrap;
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.5
+    }
+
+    .modal .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px
+    }
+
+    .modal .modal-title {
+      font-weight: 800;
+      color: var(--gold)
+    }
+
+    .modal .close-modal {
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      color: var(--text);
+      padding: 6px 8px;
+      border-radius: 8px;
+      cursor: pointer
+    }
+
+    /* small responsive tweaks */
+    @media (max-width:900px) {
+      .menu-button {
+        right: 8px;
+        top: 8px
+      }
+
+      .avatar {
+        width: 56px;
+        height: 56px
+      }
+
+      .container {
+        padding: 18px
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <!-- Top status (title removed per request) -->
+    <div class="topbar" data-aos="fade-down" data-aos-duration="700">
+      <div id="topStatus" class="status-chip">Инициализация...</div>
+    </div>
+
+    <!-- Header: changed to required text -->
+    <header class="header" data-aos="fade-down" data-aos-duration="900">
+      <div class="main-title">Сморгонь в годы первой мировой войны</div>
+      <div class="subtitle">Хроники, взаимодействие и интерактив</div>
+    </header>
+
+    <!-- Mode cards -->
+    <section class="modes" data-aos="fade-up" data-aos-delay="200">
+      <div class="mode-card" id="bookCard">
+        <div class="mode-icon">📖</div>
+        <h3>Book</h3>
+        <p>Факты, документы, поиск по материалам</p>
+      </div>
+      <div class="mode-card" id="gameCard">
+        <div class="mode-icon">🎮</div>
+        <h3>Game</h3>
+        <p>Интерактивные сценарии 1916</p>
+      </div>
+    </section>
+
+    <!-- Encyclopedia (Book) -->
+    <section id="encyclopedia" class="glass" style="display:none;" data-aos="fade-up">
+      <div style="display:flex; align-items:center; justify-content:space-between;">
+        <h2 class="section-title">Исторические факты</h2>
+        <div style="display:flex; gap:8px; align-items:center;">
+          <div class="label" style="color:var(--muted); font-weight:700">GROQ</div>
+        </div>
+      </div>
+
+      <div id="groqPanel" class="groq-panel" aria-hidden="true">
+        <input id="groqInput" class="groq-input"
+          placeholder="Введите запрос для Groq. Пример: 'сражения Сморгони 1916'">
+        <div class="groq-actions">
+          <button id="groqSend" class="btn secondary">Отправить</button>
+          <button id="groqClear" class="btn ghost"
+            style="background:transparent;color:var(--text);border:1px solid rgba(255,255,255,0.06);">Очистить</button>
+        </div>
+      </div>
+
+      <div id="factsContainer" class="fact-grid" aria-live="polite"></div>
+    </section>
+
+    <!-- Game -->
+    <section id="game" class="glass" style="display:none;" data-aos="fade-up">
+      <h2 class="section-title">Интерактив</h2>
+
+      <div class="character-grid" id="characterSelection"></div>
+
+      <div id="gameplayArea" style="display:none;">
+        <div class="chat-area" id="chatMessages" aria-live="polite"></div>
+        <div class="progress-container">
+          <div class="progress-bar" id="survivalProgress"></div>
+        </div>
+        <div class="choice-container" id="choiceButtons"></div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Menu button toggles side panel -->
+  <button class="menu-button" id="menuBtn" aria-label="Открыть меню" title="Меню">
+    <div class="menu-icon"><span></span></div>
+  </button>
+
+  <!-- Side panel: close button removed; toggled only by menuBtn, ESC and swipe -->
+  <aside class="side-panel" id="sidePanel" aria-hidden="true">
+    <div class="side-header">
+      <div class="side-title">Настройки и профиль</div>
+      <div style="width:36px"></div>
+    </div>
+
+    <div class="side-content">
+      <section style="margin-bottom:14px;">
+        <h3 class="section-title" style="font-size:1.06rem;margin-bottom:8px">Профиль</h3>
+
+        <div class="avatar-block">
+          <div class="avatar"><img id="avatarPreview" src="https://via.placeholder.com/300x200?text=Avatar"
+              alt="avatar" /></div>
+          <div>
+            <div class="label">Статус</div>
+            <div id="authStatus" style="font-weight:800; margin-top:4px;">Не авторизован</div>
+          </div>
+        </div>
+
+        <!-- Choose from gallery button (works) -->
+        <div style="margin-bottom:12px;">
+          <label class="btn secondary" id="chooseFromGalleryLabel"
+            style="display:inline-flex; gap:8px; align-items:center; cursor:pointer;">
+            <input id="galleryInput" type="file" accept="image/*" style="display:none" />
+            Выбрать из галереи
+          </label>
+          <span style="margin-left:8px; color:var(--muted); font-size:0.9rem;">(предпросмотр + загрузка)</span>
+        </div>
+
+        <!-- Telegram auth / open profile -->
+        <div id="authArea">
+          <div class="label" style="margin-bottom:8px">Авторизация через Telegram</div>
+          <div style="display:flex;gap:8px">
+            <button class="btn" id="tgAuthBtn">Авторизоваться</button>
+            <button class="btn secondary" id="openProfileBtn" style="display:none">Открыть профиль</button>
+          </div>
+          <div style="margin-top:8px; color:var(--muted)">Откройте WebApp через бота — тогда initData появится
+            автоматически</div>
+        </div>
+
+        <!-- Profile area shown when logged in -->
+        <div id="profileArea" style="display:none; margin-top:12px;">
+          <div class="label">Имя</div>
+          <div id="profileName" style="font-weight:800; margin-bottom:8px"></div>
+          <div class="label">Telegram</div>
+          <div id="profileUsername" style="color:var(--muted); font-weight:700; margin-bottom:12px"></div>
+
+          <div style="display:flex; gap:8px;">
+            <label class="btn" id="uploadAvatarLabel">
+              <input id="avatarFile" type="file" accept="image/*" style="display:none" />
+              Загрузить аватар
+            </label>
+            <button class="btn secondary" id="logoutBtn">Выйти</button>
+          </div>
+        </div>
+      </section>
+
+      <section style="margin-bottom:12px;">
+        <h3 class="section-title" style="font-size:1.02rem;margin-bottom:8px">Тема</h3>
+        <div class="toggle">
+          <div class="label">Automatic</div>
+          <div class="switch"><input id="autoThemeSwitch" type="checkbox"><label class="slider"
+              for="autoThemeSwitch"></label></div>
+        </div>
+        <div class="toggle">
+          <div class="label">Light / Dark</div>
+          <div class="switch"><input id="cycleThemeSwitch" type="checkbox"><label class="slider"
+              for="cycleThemeSwitch"></label></div>
+        </div>
+      </section>
+
+      <section style="margin-bottom:8px;">
+        <h3 class="section-title" style="font-size:1.02rem;margin-bottom:8px">Звук</h3>
+        <div class="toggle">
+          <div class="label" id="panelVolumeLabel">Volume Off</div>
+          <div class="switch"><input id="panelVolumeSwitch" type="checkbox"><label class="slider"
+              for="panelVolumeSwitch"></label></div>
+        </div>
+      </section>
+    </div>
+
+    <div class="side-footer" style="padding:12px;">
+      <button class="btn secondary" id="panelCancel">Отмена</button>
+      <button class="btn" id="panelApply">Применить</button>
+    </div>
+  </aside>
+
+  <!-- modal container for GROQ results -->
+  <div id="modalRoot" aria-hidden="true"></div>
+
+  <!-- AOS & Telegram SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+  <script>
+    AOS.init({ duration: 800, once: true, easing: 'ease-out-cubic' });
+
+    
+    const API_BASE = "https://authsrv-1.onrender.com"; 
+    const GROQ_ENDPOINT = `${API_BASE}/groq`;      
+    const AUTH_ENDPOINT = `${API_BASE}/auth/telegram`;
+    const ME_ENDPOINT = `${API_BASE}/me`;
+    const AVATAR_ENDPOINT = `${API_BASE}/user/avatar`;
+
+    // ---------- Telegram SDK ----------
+    const tg = window.Telegram?.WebApp;
+    try { tg && tg.ready(); } catch (e) { /* ignore */ }
+
+    // ---------- Helpers ----------
+    function el(id) { return document.getElementById(id); }
+    function safeJSON(s) { try { return JSON.parse(s); } catch (e) { return null; } }
+    function setText(id, txt) { const e = el(id); if (e) e.textContent = txt; }
+    function showPanel(open) { const side = el('sidePanel'); if (!side) return; if (open) { side.classList.add('open'); side.setAttribute('aria-hidden', 'false'); } else { side.classList.remove('open'); side.setAttribute('aria-hidden', 'true'); } }
+    function makeModal(title, contentHtml) {
+      const root = el('modalRoot');
+      root.innerHTML = '';
+      root.setAttribute('aria-hidden', 'false');
+      const back = document.createElement('div'); back.className = 'modal-backdrop';
+      const box = document.createElement('div'); box.className = 'modal';
+      box.innerHTML = `<div class="modal-header"><div class="modal-title">${title}</div><button class="close-modal" id="closeModalBtn">Закрыть</button></div><pre>${contentHtml}</pre>`;
+      back.appendChild(box); root.appendChild(back);
+      document.getElementById('closeModalBtn').addEventListener('click', () => { root.innerHTML = ''; root.setAttribute('aria-hidden', 'true'); }, { passive: true });
+      back.addEventListener('click', (ev) => { if (ev.target === back) { root.innerHTML = ''; root.setAttribute('aria-hidden', 'true'); } }, { passive: true });
+    }
+
+    // Pretty-print JSON or raw text for modal
+    function prettyResult(data) {
+      if (typeof data === 'string') return escapeHtml(data);
+      try { return escapeHtml(JSON.stringify(data, null, 2)); } catch (e) { return escapeHtml(String(data)); }
+    }
+    function escapeHtml(s) { return String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c])); }
+
+    // Fetch wrappers with timeout + improved error messages
+    async function fetchWithTimeout(resource, options = {}, timeout = 10000) {
+      const controller = new AbortController();
+      const id = setTimeout(() => controller.abort(), timeout);
+      try {
+        const res = await fetch(resource, Object.assign({ signal: controller.signal }, options));
+        clearTimeout(id);
+        const txt = await res.text();
+        let data;
+        try { data = JSON.parse(txt); } catch (e) { data = txt; }
+        return { ok: res.ok, status: res.status, data };
+      } catch (err) {
+        clearTimeout(id);
+        if (err.name === 'AbortError') throw new Error('timeout');
+        throw err;
+      }
+    }
+
+    // ---------- App (Senior-quality) ----------
+    const App = (function () {
+      const state = {
+        facts: [],
+        profile: null,
+        tokenKey: 'mocki_token_v4',
+        soundEnabled: false,
+        bgAudio: null,
+      };
+
+      // UI refs
+      const refs = {
+        topStatus: el('topStatus'),
+        bookCard: el('bookCard'), gameCard: el('gameCard'),
+        groqPanel: el('groqPanel'), groqInput: el('groqInput'), groqSend: el('groqSend'), groqClear: el('groqClear'),
+        factsContainer: el('factsContainer'),
+        characterSelection: el('characterSelection'), chatMessages: el('chatMessages'),
+        choiceButtons: el('choiceButtons'), survivalProgress: el('survivalProgress'),
+        menuBtn: el('menuBtn'), sidePanel: el('sidePanel'),
+        galleryInput: el('galleryInput'), chooseFromGalleryLabel: el('chooseFromGalleryLabel'),
+        avatarPreview: el('avatarPreview'), avatarFile: el('avatarFile'), uploadAvatarLabel: el('uploadAvatarLabel'),
+        tgAuthBtn: el('tgAuthBtn'), openProfileBtn: el('openProfileBtn'),
+        profileArea: el('profileArea'), authStatus: el('authStatus'), profileName: el('profileName'), profileUsername: el('profileUsername'),
+        panelVolumeSwitch: el('panelVolumeSwitch'), panelVolumeLabel: el('panelVolumeLabel'), panelApply: el('panelApply'), panelCancel: el('panelCancel'),
+      };
+
+      // token helpers
+      function saveToken(token) { localStorage.setItem(state.tokenKey, token); }
+      function getToken() { return localStorage.getItem(state.tokenKey); }
+      function clearToken() { localStorage.removeItem(state.tokenKey); }
+
+      // status
+      function setStatus(txt) { if (refs.topStatus) refs.topStatus.textContent = txt; }
+
+      // Load facts (static file or backend)
+      async function loadFacts() {
+        try {
+          const res = await fetchWithTimeout('facts.json', { cache: 'no-store' }, 8000);
+          if (res.ok && Array.isArray(res.data)) state.facts = res.data;
+          else state.facts = [{ id: 1, title: 'Пример факта', text: 'Факты не загружены', year: '1916', image: 'https://via.placeholder.com/600x400?text=1916' }];
+        } catch (err) {
+          state.facts = [{ id: 1, title: 'Пример факта', text: 'Факты не загружены (offline)', year: '1916', image: 'https://via.placeholder.com/600x400?text=1916' }];
+        }
+        renderFacts();
+      }
+      function renderFacts() {
+        const c = refs.factsContainer; if (!c) return;
+        c.innerHTML = state.facts.map((f, i) => `
+          <article class="fact-card" data-id="${f.id}" data-aos="fade-up" data-aos-delay="${(i % 6) * 70}">
+            <img class="fact-img" src="${escapeHtml(f.image || '')}" alt="${escapeHtml(f.title)}" loading="lazy" />
+            <div class="fact-content">
+              <div class="fact-year">${escapeHtml(f.year || '')}</div>
+              <h3 class="fact-title">${escapeHtml(f.title || '')}</h3>
+              <p class="fact-text">${escapeHtml((f.text || '').slice(0, 160))}${(f.text || '').length > 160 ? '…' : ''}</p>
+            </div>
+          </article>
+        `).join('');
+        c.querySelectorAll('.fact-card').forEach(card => {
+          card.addEventListener('click', () => {
+            const id = Number(card.dataset.id);
+            const f = state.facts.find(x => x.id === id);
+            if (f) openFactModal(f);
+            try { tg?.HapticFeedback?.selectionChanged?.(); } catch (e) { }
+          }, { passive: true });
+        });
+      }
+
+      function openFactModal(f) {
+        const html = `<strong>${escapeHtml(f.title)}</strong>\n\n${escapeHtml(f.text || '')}\n\nГод: ${escapeHtml(f.year || '—')}`;
+        makeModal('Факт: ' + (f.title || ''), prettyResult({ title: f.title, year: f.year, text: f.text }));
+      }
+
+      // Game (kept original)
+      function renderCharacters() {
+        const sel = refs.characterSelection; if (!sel) return;
+        sel.innerHTML = `
+          <button class="char-btn" data-char="soldier" type="button">Солдат</button>
+          <button class="char-btn" data-char="nurse" type="button">Медсестра</button>
+          <button class="char-btn" data-char="resident" type="button">Житель</button>
+        `;
+        sel.querySelectorAll('.char-btn').forEach(btn => btn.addEventListener('click', () => startGame(btn.dataset.char), { passive: true }));
+      }
+      function startGame(char) {
+        document.getElementById('characterSelection').style.display = 'none';
+        document.getElementById('gameplayArea').style.display = 'block';
+        addMessage('AI', `Ты — ${char === 'soldier' ? 'солдат' : char === 'nurse' ? 'медсестра' : 'житель'}. 1916 год. Что делать?`);
+        showChoices(['Осмотреться', 'Позвать помощь', 'Спрятаться']);
+        try { tg?.HapticFeedback?.impactOccurred?.('heavy'); } catch (e) { }
+      }
+      function showChoices(opts) {
+        refs.choiceButtons.innerHTML = opts.map(o => `<button class="choice-btn" data-choice="${escapeHtml(o)}">${escapeHtml(o)}</button>`).join('');
+        refs.choiceButtons.querySelectorAll('.choice-btn').forEach(b => b.addEventListener('click', () => selectChoice(b.dataset.choice), { passive: true }));
+      }
+      function selectChoice(choice) {
+        addMessage('user', choice);
+        refs.choiceButtons.innerHTML = '';
+        setTimeout(() => { addMessage('AI', generateResponse(choice)); updateProgress(12); }, 700);
+      }
+      function generateResponse(choice) {
+        const map = { 'Осмотреться': 'Видишь разрушенные дома и дым.', 'Позвать помощь': 'Кричишь — в ответ слышен шорох.', 'Спрятаться': 'Прячешься в воронку; вокруг шум.' };
+        return map[choice] || 'Действуешь...';
+      }
+      function addMessage(sender, text) {
+        const area = refs.chatMessages; if (!area) return;
+        const b = document.createElement('div'); b.className = 'message-bubble ' + (sender === 'user' ? 'user-msg' : 'ai-msg'); b.innerHTML = `<strong>${sender === 'user' ? 'Ты' : 'AI'}:</strong> ${escapeHtml(text)}`; area.appendChild(b); b.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); return b;
+      }
+      function updateProgress(n) { const bar = refs.survivalProgress; if (!bar) return; const cur = parseInt(bar.style.width || '0', 10) || 0; bar.style.width = Math.min(100, cur + n) + '%'; }
+
+      // ---------- Side panel interactions ----------
+      function initPanel() {
+        // menu toggles panel
+        refs.menuBtn && refs.menuBtn.addEventListener('click', () => {
+          const side = refs.sidePanel;
+          if (!side) return;
+          const open = side.classList.contains('open');
+          if (open) { side.classList.remove('open'); side.setAttribute('aria-hidden', 'true'); }
+          else { side.classList.add('open'); side.setAttribute('aria-hidden', 'false'); }
+          try { tg?.HapticFeedback?.selectionChanged?.(); } catch (e) { }
+        }, { passive: true });
+
+        // apply/cancel close panel
+        refs.panelApply && refs.panelApply.addEventListener('click', () => { refs.sidePanel.classList.remove('open'); refs.sidePanel.setAttribute('aria-hidden', 'true'); }, { passive: true });
+        refs.panelCancel && refs.panelCancel.addEventListener('click', () => { refs.sidePanel.classList.remove('open'); refs.sidePanel.setAttribute('aria-hidden', 'true'); }, { passive: true });
+
+        // ESC to close
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && refs.sidePanel.classList.contains('open')) { refs.sidePanel.classList.remove('open'); refs.sidePanel.setAttribute('aria-hidden', 'true'); } });
+
+        // swipe to close for UX
+        let startX = null;
+        document.addEventListener('touchstart', (ev) => startX = ev.touches[0].clientX, { passive: true });
+        document.addEventListener('touchend', (ev) => { if (startX === null) return; const dx = ev.changedTouches[0].clientX - startX; if (dx < -80) refs.sidePanel && refs.sidePanel.classList.remove('open'); startX = null; }, { passive: true });
+
+        // Gallery chooser: preview + upload
+        refs.chooseFromGalleryLabel && refs.chooseFromGalleryLabel.addEventListener('click', () => { refs.galleryInput && refs.galleryInput.click(); }, { passive: true });
+        refs.galleryInput && refs.galleryInput.addEventListener('change', async (e) => {
+          const file = e.target.files && e.target.files[0]; if (!file) return;
+          // preview immediately
+          const reader = new FileReader();
+          reader.onload = function (ev) { refs.avatarPreview.src = ev.target.result || ''; };
+          reader.readAsDataURL(file);
+
+          // upload to backend (requires token)
+          const token = getToken();
+          if (!token) { alert('Сначала авторизуйтесь через бота в Telegram.'); return; }
+          setStatus('Загружаю аватар...');
+          const fd = new FormData(); fd.append('avatar', file);
+          try {
+            const res = await fetchWithTimeout(AVATAR_ENDPOINT, { method: 'POST', headers: { Authorization: `Bearer ${token}` }, body: fd }, 15000);
+            if (!res.ok) { console.error('avatar upload failed', res); alert('Ошибка загрузки аватара: ' + (res.data && res.data.error ? JSON.stringify(res.data) : res.status)); setStatus('Ошибка загрузки'); return; }
+            // refresh profile
+            await restoreProfileFromServer();
+            setStatus('Аватар обновлён');
+          } catch (err) { console.error(err); alert('Ошибка сети при загрузке аватара: ' + err.message); setStatus('Сеть недоступна'); }
+        }, { passive: true });
+
+        // upload avatar from panel (profile area)
+        refs.uploadAvatarLabel && refs.uploadAvatarLabel.addEventListener('click', () => refs.avatarFile && refs.avatarFile.click(), { passive: true });
+        refs.avatarFile && refs.avatarFile.addEventListener('change', uploadAvatarFromProfile, { passive: true });
+      }
+
+      async function uploadAvatarFromProfile(e) {
+        const file = e.target.files && e.target.files[0]; if (!file) return;
+        const reader = new FileReader(); reader.onload = (ev) => refs.avatarPreview.src = ev.target.result || ''; reader.readAsDataURL(file);
+        const token = getToken(); if (!token) { alert('Сначала авторизуйтесь через бота'); return; }
+        setStatus('Загружаю аватар...');
+        const fd = new FormData(); fd.append('avatar', file);
+        try {
+          const res = await fetchWithTimeout(AVATAR_ENDPOINT, { method: 'POST', headers: { Authorization: `Bearer ${token}` }, body: fd }, 15000);
+          if (!res.ok) { console.error('avatar upload fail', res); alert('Ошибка загрузки: ' + (res.data && res.data.error ? JSON.stringify(res.data) : res.status)); setStatus('Ошибка загрузки'); return; }
+          await restoreProfileFromServer();
+          setStatus('Аватар загружен');
+        } catch (err) { console.error(err); alert('Сетевая ошибка при загрузке аватара: ' + err.message); setStatus('Сеть недоступна'); }
+      }
+
+      // ---------- Auth flow (initData -> POST /auth/telegram) with improved error reporting ----------
+      async function authorizeWithInitData(initDataString) {
+        if (!initDataString) return false;
+        setStatus('Авторизация через Telegram...');
+        try {
+          const res = await fetchWithTimeout(AUTH_ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ initData: initDataString }) }, 12000);
+          if (!res.ok) {
+            // if network-level issue: show hint about CORS/HTTPS
+            console.error('auth failed', res);
+            const hint = (res.status === 0 || res.status === 0) ? 'Возможная проблема: бэкенд недоступен или блокируется CORS.' : '';
+            alert('Ошибка авторизации: ' + (res.data?.error || res.status) + '\n' + hint);
+            setStatus('Ошибка авторизации');
+            return false;
+          }
+          const data = res.data;
+          if (data && data.ok && data.token) {
+            saveToken(data.token);
+            // try load profile from response or /me
+            if (data.profile) { state.profile = data.profile; applyProfileToUI(data.profile); }
+            else await restoreProfileFromServer();
+            setStatus('Вход выполнен');
+            return true;
+          } else {
+            // server returned unexpected structure
+            console.error('unexpected auth response', data);
+            alert('Авторизация не удалась — неожиданный ответ сервера. Проверьте формат JSON (ожидается { ok, token, profile? })');
+            setStatus('Авторизация не удалась');
+            return false;
+          }
+        } catch (err) {
+          console.error('auth network error', err);
+          // give explicit hints for developer
+          const msg = err.message === 'timeout' ? 'Время ожидания истекло. Проверьте доступность бэкенда и скорость сети.' : err.message;
+          alert('Сетевая ошибка при авторизации: ' + msg + '\nПроверьте: 1) API_BASE верный; 2) CORS; 3) HTTPS доступность сервера.');
+          setStatus('Сеть недоступна');
+          return false;
+        }
+      }
+
+      async function restoreProfileFromServer() {
+        const token = getToken(); if (!token) return null;
+        try {
+          const res = await fetchWithTimeout(ME_ENDPOINT, { headers: { Authorization: `Bearer ${token}` } }, 10000);
+          if (!res.ok) { console.warn('me failed', res); return null; }
+          const data = res.data;
+          if (data && data.ok && data.profile) { state.profile = data.profile; applyProfileToUI(data.profile); return data.profile; }
+          if (data && data.profile) { state.profile = data.profile; applyProfileToUI(data.profile); return data.profile; }
+          // fallback if server returns profile directly
+          if (typeof data === 'object' && data.id) { state.profile = data; applyProfileToUI(data); return data; }
+          return null;
+        } catch (err) { console.error('fetch profile error', err); return null; }
+      }
+
+      function applyProfileToUI(profile) {
+        state.profile = profile;
+        setText('authStatus', 'Авторизован');
+        refs.avatarPreview.src = profile.avatar || profile.photo_url || refs.avatarPreview.src;
+        setText('profileName', profile.name || profile.first_name || '');
+        setText('profileUsername', profile.username ? '@' + profile.username : `ID: ${profile.id || '—'}`);
+        // show profile area, hide auth area
+        el('profileArea').style.display = '';
+        el('authArea').style.display = 'none';
+        // show openProfileBtn
+        refs.openProfileBtn && (refs.openProfileBtn.style.display = 'inline-block');
+      }
+
+      // ---------- GROQ integration: show modal with pretty result ----------
+      function initGroq() {
+        refs.bookCard && refs.bookCard.addEventListener('click', () => {
+          // open encyclopedia and toggle GROQ panel
+          App.switchMode('encyclopedia');
+          const p = el('groqPanel');
+          if (p) p.setAttribute('aria-hidden', p.style.display === 'none' ? 'false' : 'true');
+          if (p) p.style.display = (p.style.display === 'none' || !p.style.display) ? 'block' : 'none';
+          setTimeout(() => refs.groqInput && refs.groqInput.focus(), 80);
+        }, { passive: true });
+
+        refs.groqSend && refs.groqSend.addEventListener('click', async () => {
+          const q = (refs.groqInput && refs.groqInput.value || '').trim(); if (!q) return alert('Введите запрос');
+          refs.groqSend.disabled = true; refs.groqSend.textContent = 'Отправляем...';
+          try {
+            // include token if available
+            const token = getToken();
+            const headers = Object.assign({ 'Content-Type': 'application/json' }, token ? { Authorization: `Bearer ${token}` } : {});
+            const res = await fetchWithTimeout(GROQ_ENDPOINT, { method: 'POST', headers, body: JSON.stringify({ query: q }) }, 20000);
+            if (!res.ok) { console.error('groq error', res); alert('Ошибка GROQ: ' + (res.data?.error || res.status)); refs.groqSend.disabled = false; refs.groqSend.textContent = 'Отправить'; return; }
+            // show modal with prettified result
+            makeModal('Результат Groq', prettyResult(res.data));
+          } catch (err) { console.error('groq network', err); alert('Сетевая ошибка при запросе к GROQ: ' + err.message); }
+          refs.groqSend.disabled = false; refs.groqSend.textContent = 'Отправить';
+        }, { passive: true });
+
+        refs.groqClear && refs.groqClear.addEventListener('click', () => { if (refs.groqInput) refs.groqInput.value = ''; }, { passive: true });
+      }
+
+      // ---------- Initialization ----------
+      async function init() {
+        setStatus('Инициализация UI...');
+        initPanel(); initTheme(); await loadFacts(); renderCharacters(); initGroq();
+        // try restore session
+        await tryRestoreOrInitAuth();
+        AOS.refresh();
+        setStatus('Готово');
+      }
+
+      // Theme behavior preserved from original code, wrapped
+      function initTheme() {
+        const autoSwitch = el('autoThemeSwitch'); const cycleSwitch = el('cycleThemeSwitch');
+        let cycleIndex = 0, auto = true;
+        if (autoSwitch) autoSwitch.checked = true;
+        if (cycleSwitch) cycleSwitch.checked = false;
+        const resolveAuto = () => { const t = tg?.colorScheme; const sys = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches; return t ? t : (sys ? 'dark' : 'light'); };
+        const apply = (theme) => document.documentElement.setAttribute('data-theme', theme);
+        apply(resolveAuto());
+        autoSwitch && autoSwitch.addEventListener('change', () => { auto = !!autoSwitch.checked; if (auto) apply(resolveAuto()); else apply(localStorage.getItem('ui_theme_manual') || 'dark'); }, { passive: true });
+        cycleSwitch && cycleSwitch.addEventListener('click', (ev) => { ev.preventDefault(); cycleIndex = (cycleIndex + 1) % 3; if (cycleIndex === 1) { apply('light'); } else apply('dark'); }, { passive: true });
+      }
+
+      // Try restore session or use Telegram initData
+      async function tryRestoreOrInitAuth() {
+        const t = getToken();
+        if (t) {
+          setStatus('Восстанавливаю сессию...');
+          const p = await restoreProfileFromServer();
+          if (p) { setStatus('Сессия восстановлена'); refs.tgAuthBtn && (refs.tgAuthBtn.style.display = 'none'); refs.openProfileBtn && (refs.openProfileBtn.style.display = 'inline-block'); return; } else { clearToken(); }
+        }
+        const initData = window.Telegram?.WebApp?.initData || null;
+        if (initData) {
+          const ok = await authorizeWithInitData(initData);
+          if (ok) { refs.tgAuthBtn && (refs.tgAuthBtn.style.display = 'none'); refs.openProfileBtn && (refs.openProfileBtn.style.display = 'inline-block'); }
+        } else setStatus('Откройте WebApp через Telegram бота для авторизации');
+        // wire tgAuthBtn click to attempt auth (UI-friendly)
+        refs.tgAuthBtn && refs.tgAuthBtn.addEventListener('click', async () => {
+          const id = window.Telegram?.WebApp?.initData || null;
+          if (!id) return alert('Откройте WebApp внутри Telegram (через бота) и повторите');
+          await authorizeWithInitData(id);
+        }, { passive: true });
+
+        refs.openProfileBtn && refs.openProfileBtn.addEventListener('click', async () => {
+          // open panel if profile exists; otherwise try auth
+          if (state.profile) { refs.sidePanel.classList.add('open'); refs.sidePanel.setAttribute('aria-hidden', 'false'); return; }
+          const id = window.Telegram?.WebApp?.initData || null;
+          if (!id) return alert('Профиль не найден. Откройте WebApp через бота для авторизации.');
+          const ok = await authorizeWithInitData(id);
+          if (ok) { refs.sidePanel.classList.add('open'); refs.sidePanel.setAttribute('aria-hidden', 'false'); }
+        }, { passive: true });
+      }
+
+      // Upload helpers for avatar (used above)
+      // ... (implemented earlier in initPanel/uploadAvatarFromProfile)
+
+      // Expose public API
+      return {
+        init,
+        switchMode: function (mode) {
+          // show/hide
+          el('encyclopedia').style.display = (mode === 'encyclopedia') ? '' : 'none';
+          el('game').style.display = (mode === 'game') ? '' : 'none';
+          // ensure groq panel visible only in encyclopedia
+          if (mode !== 'encyclopedia') { const gp = el('groqPanel'); if (gp) gp.style.display = 'none'; }
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+      };
+    })();
+
+    // ---------- Startup ----------
+    document.addEventListener('DOMContentLoaded', () => App.init(), { once: true });
+
+    // ---------- Debug helpers ----------
+    window.__mockiDebug = {
+      getToken: () => localStorage.getItem('mocki_token_v4'),
+      clearToken: () => localStorage.removeItem('mocki_token_v4')
+    };
+  </script>
+
+  <!-- AOS refresh -->
+  <script> AOS.refresh(); </script>
+</body>
+
+</html>
