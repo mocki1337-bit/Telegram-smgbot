@@ -1,21 +1,23 @@
-FROM node:18-alpine AS frontend-build
-WORKDIR /app/frontend
-COPY frontend/ .
-
 FROM gcc:latest AS backend-build
 WORKDIR /app/backend
 COPY backend/ .
-RUN apt-get update && apt-get install -y cmake
+
+RUN apt-get update && apt-get install -y \
+    cmake \
+    libcurl4-openssl-dev \
+    && rm -rf /var/lib/apt/lists/*
+
 RUN cmake . && make
 
 FROM ubuntu:22.04
 WORKDIR /app
 
+COPY --from=backend-build /app/backend/authsrv /app/backend/authsrv
 
-COPY --from=backend-build /app/backend/authsrv /app/backend/
-COPY --from=frontend-build /app/frontend /app/frontend/
+COPY frontend/ /app/frontend/
 
 RUN apt-get update && apt-get install -y \
+    libcurl4 \
     libstdc++6 \
     && rm -rf /var/lib/apt/lists/*
 
