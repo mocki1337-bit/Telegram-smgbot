@@ -801,7 +801,7 @@
     AOS.init({ duration: 800, once: true, easing: 'ease-out-cubic' });
 
     
-    const API_BASE = "https://authsrv-1.onrender.com"; 
+    const API_BASE = window.location.origin;; 
     const GROQ_ENDPOINT = `${API_BASE}/groq`;      
     const AUTH_ENDPOINT = `${API_BASE}/auth/telegram`;
     const ME_ENDPOINT = `${API_BASE}/me`;
