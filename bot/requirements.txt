@@ -1,2 +1,10 @@
-aiogram==3.4.1
-python-dotenv
+pyTelegramBotAPI==4.14.0
+transformers==4.57.1
+torch==2.7.0
+peft==0.6.2
+datasets==2.16.1
+accelerate==0.25.0
+huggingface-hub==0.19.4
+python-dotenv==1.0.0
+redis==5.0.1
+requests==2.31.0
