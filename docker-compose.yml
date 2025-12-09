@@ -1,19 +1,122 @@
-version: "3.8"
-services:
-backend:
-build: ./backend
-container_name: authsrv
-ports:
-- "8080:8080"
-restart: unless-stopped
 
+user@WIN-KFEMT8JLDD0 MINGW64 ~
+$cd /c/Users/user/project_telegram/Telegram-smgbot
+bash: c: command not found
 
-frontend:
-build:
-context: ./frontend
-container_name: webapp
-ports:
-- "3000:3000"
-depends_on:
-- backend
-restart: unless-stopped
+user@WIN-KFEMT8JLDD0 MINGW64 ~
+$ cd /c/Users/user/project_telegram/Telegram-smgbot
+
+user@WIN-KFEMT8JLDD0 MINGW64 ~/project_telegram/Telegram-smgbot (main)
+$
+git rm -f .env
+fatal: pathspec '.env' did not match any files
+
+user@WIN-KFEMT8JLDD0 MINGW64 ~/project_telegram/Telegram-smgbot (main)
+$ git status
+On branch main
+Your branch is up to date with 'origin/main'.
+
+nothing to commit, working tree clean
+
+user@WIN-KFEMT8JLDD0 MINGW64 ~/project_telegram/Telegram-smgbot (main)
+$
+
+user@WIN-KFEMT8JLDD0 MINGW64 ~/project_telegram/Telegram-smgbot (main)
+$ ggit add .gitignore .env.example
+git commit -m "security: cleanup env, add example env, improve gitignore"
+git push origin main
+bash: $'\302\203git': command not found
+On branch main
+Your branch is up to date with 'origin/main'.
+
+nothing to commit, working tree clean
+To https://github.com/mocki1337-bit/Telegram-smgbot
+ ! [rejected]        main -> main (fetch first)
+error: failed to push some refs to 'https://github.com/mocki1337-bit/Telegram-sm
+gbot'
+hint: Updates were rejected because the remote contains work that you do not
+hint: have locally. This is usually caused by another repository pushing to
+hint: the same ref. If you want to integrate the remote changes, use
+hint: 'git pull' before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+
+user@WIN-KFEMT8JLDD0 MINGW64 ~/project_telegram/Telegram-smgbot (main)
+$ git add .gitignore .env.example
+
+user@WIN-KFEMT8JLDD0 MINGW64 ~/project_telegram/Telegram-smgbot (main)
+$ git commit -m "security: cleanup env, add example env, improve gitignore"
+On branch main
+Your branch is up to date with 'origin/main'.
+
+nothing to commit, working tree clean
+
+user@WIN-KFEMT8JLDD0 MINGW64 ~/project_telegram/Telegram-smgbot (main)
+$ git push origin main
+To https://github.com/mocki1337-bit/Telegram-smgbot
+ ! [rejected]        main -> main (fetch first)
+error: failed to push some refs to 'https://github.com/mocki1337-bit/Telegram-sm
+gbot'
+hint: Updates were rejected because the remote contains work that you do not
+hint: have locally. This is usually caused by another repository pushing to
+hint: the same ref. If you want to integrate the remote changes, use
+hint: 'git pull' before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+
+user@WIN-KFEMT8JLDD0 MINGW64 ~/project_telegram/Telegram-smgbot (main)
+$ ggit pull --rebase origin main
+bash: $'\302\203git': command not found
+
+user@WIN-KFEMT8JLDD0 MINGW64 ~/project_telegram/Telegram-smgbot (main)
+$ git pull --rebase origin main
+bash: $'\302\203git': command not found
+
+user@WIN-KFEMT8JLDD0 MINGW64 ~/project_telegram/Telegram-smgbot (main)
+$ git pull --rebase origin main
+remote: Enumerating objects: 5, done.
+remote: Counting objects: 100% (5/5), done.
+remote: Compressing objects: 100% (3/3), done.
+remote: Total 3 (delta 1), reused 0 (delta 0), pack-reused 0 (from 0)
+Unpacking objects: 100% (3/3), 1.10 KiB | 112.00 KiB/s, done.
+From https://github.com/mocki1337-bit/Telegram-smgbot
+ * branch            main       -> FETCH_HEAD
+   20053f5..c88561c  main       -> origin/main
+Updating 20053f5..c88561c
+Fast-forward
+ .gitignore | 38 +++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 37 insertions(+), 1 deletion(-)
+
+user@WIN-KFEMT8JLDD0 MINGW64 ~/project_telegram/Telegram-smgbot (main)
+$ git origin push
+git: 'origin' is not a git command. See 'git --help'.
+
+user@WIN-KFEMT8JLDD0 MINGW64 ~/project_telegram/Telegram-smgbot (main)
+$ git origin push
+git: 'origin' is not a git command. See 'git --help'.
+
+user@WIN-KFEMT8JLDD0 MINGW64 ~/project_telegram/Telegram-smgbot (main)
+$ git push origin main
+Everything up-to-date
+
+user@WIN-KFEMT8JLDD0 MINGW64 ~/project_telegram/Telegram-smgbot (main)
+$ mkdir -p backend frontend bot infra
+
+user@WIN-KFEMT8JLDD0 MINGW64 ~/project_telegram/Telegram-smgbot (main)
+$ cat > .gitignore <<'EOF'
+> node_modules/
+build/
+dist/
+.env.local
+.env
+npm-debug.log
+yarn-error.log
+>
+> __pycache__/
+*.pyc
+venv/
+.env
+> /build
+CMakeFiles/
+/CMakeCache.txt
+> .DS_Store
+.idea/
+.vscode/
